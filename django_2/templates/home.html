@@ -1,0 +1,39 @@
+{% include 'base.html' %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="#">
+
+{% block css %}
+    <style>
+        .wallpaper-container {
+            width: auto;
+            min-width: 1200px;
+            max-width: 1340px;
+            height: 790px;
+            overflow-y: auto;
+            background-color: rgba(144, 144, 144, 0.3);
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 10px;
+            margin: 30px 30px;
+            padding: 10px 15px;
+        }
+        .image-container{
+            width: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <form class="wallpaper-container">
+    {% if random_images %}
+        {% for image in random_images %}
+            <img src="{% static image %}" alt="Random Image" class="image-container">
+        {% endfor %}
+    {% else %}
+        <!-- 没有图片的提示 -->
+        <p>您还没有上传任何图片。</p>
+    {% endif %}
+    </form>
+{% endblock %}

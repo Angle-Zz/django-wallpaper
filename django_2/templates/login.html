@@ -1,0 +1,86 @@
+{% include "base.html" %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="#">
+{% block css %}
+    <style>
+        html {
+            height: 100%;
+            width: auto;
+            /*设置<html> 元素的高度为 100% */
+            background-image: url({% static 'wallpapers/wallpaper.png' %});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 152% 152%; /* 背景图片自动缩放，以覆盖整个背景区域 */
+        }
+        .login-container {
+            padding: 20px;
+            background-color: rgba(144, 144, 144, 0.3);
+            border-radius: 5px;
+            float: left; /* 添加浮动属性 */
+            margin-top: 20px; /* 调整上边距 */
+            width: 500px;
+            max-width: 600px;
+            align-self: center; /* 将login-container在垂直方向上居中对齐 */
+        }
+        .login-container h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 宋体, SimSun, serif;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            font-size: 18px;
+            width: 97.5%;
+            padding: 5px;
+            border: 1px solid #ffcfe9;
+            border-radius: 3px;
+            background-color: #fce4f9; /* 设置输入框背景颜色为白色 */
+        }
+        .login-container button[type="submit"] {
+            font-size: 18px;
+            padding: 8px 16px;
+            background-color: #ff4d4d;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .login-container button[type="submit"]:hover {
+            /* 添加悬停样式 */
+            background-color: #ff1818; /* 修改悬停状态下的背景颜色 */
+            /* 添加其他悬停样式属性 */
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="login-container">
+        <h2>用户登录</h2>
+        {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+        <form  method="POST" action="{% url 'login' %}">
+            <!---->
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">用户名（邮箱）：</label>
+                <input type="text" name="username" value="{{ username }}">
+            </div>
+            <div class="form-group">
+                <label for="password">密码：</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit">登录</button>
+        </form>
+    </div>
+{% endblock %}

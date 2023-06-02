@@ -1,0 +1,119 @@
+{% include 'base.html' %}
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="#">
+
+{% block css %}
+    <style type="text/css">
+        html {
+            height: 100%;
+            width: 100%;
+            min-width: 1920px;
+            min-height: 940px;
+            /*设置<html> 元素的高度为 100% */
+            background-image: url({% static 'wallpapers/wallpaper.png' %});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100% 100%; /* 背景图片自动缩放，以覆盖整个背景区域 */
+        }
+        .wallpaper-container {
+            width: auto;
+            min-width: 1200px;
+            max-width: 1340px;
+            max-height: 500px;
+            overflow-y: auto;
+            background-color: rgba(144, 144, 144, 0.3);
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-gap: 10px;
+            margin: 30px 30px;
+            padding: 10px 15px;
+        }
+        .image-container{
+            width: 80%;
+            margin: 0 auto;
+        }
+        .upload_file {
+            text-align: center;
+            /*float: left; /* 添加浮动属性 */
+            height: 150px;
+            /*margin-top: 10px;  调整上边距 */
+            width: auto;
+            max-width: 600px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(144, 144, 144, 0.3);
+            align-self: center; /* 将login-container在垂直方向上居中对齐 */
+        }
+        .upload_file h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            text-align: center;
+            font-family: 宋体, SimSun, serif;
+        }
+        input {
+            background-color: #f4f4f4; /* 设置背景颜色 */
+            border: 1px solid #ccc; /* 设置边框样式 */
+            border-radius: 4px; /* 设置边框圆角 */
+            padding: 8px; /* 设置内边距 */
+            /*margin: 4px; /* 设置外边距 */
+            margin-bottom: 15px;
+            font-family: Arial, sans-serif; /* 设置字体 */
+            font-size: 14px; /* 设置字体大小 */
+            color: #333; /* 设置文字颜色 */
+        }
+        input:hover {
+            background-color: #eaeaea; /* 设置鼠标悬停时的背景颜色 */
+        }
+
+        input:focus {
+            outline: none; /* 去除聚焦时的外边框 */
+            box-shadow: 0 0 4px #888; /* 设置聚焦时的阴影效果 */
+        }
+        input[type="file"]::-webkit-file-upload-button {
+          display: none;
+        }
+        .upload_file {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .upload_file button[type="submit"] {
+            font-size: 18px;
+            padding: 8px 16px;
+            background-color: #ff4d4d;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .upload_file button[type="submit"]:hover {
+            /* 添加悬停样式 */
+            background-color: #ff1818; /* 修改悬停状态下的背景颜色 */
+            /* 添加其他悬停样式属性 */
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <form class="wallpaper-container">
+    {% if random_images %}
+        {% for image in random_images %}
+                <img src="{% static username|add:'/'|add:image %}" alt="Random Image" class="image-container">
+        {% endfor %}
+    {% else %}
+        <!-- 没有图片的提示 -->
+        <p>您还没有上传任何图片。</p>
+    {% endif %}
+    </form>
+    <div class="upload_file">
+        <h2>上传图片</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        <input type="file" name="file" multiple required>
+        <button type="submit">上传</button>
+        </form>
+    </div>
+{% endblock %}

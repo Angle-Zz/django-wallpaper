@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>{% block title %}壁纸网页{% endblock %}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<style type="text/css">
+        html{
+            background: #333;
+        }
+        body {
+            font-size: 20px;
+            display: flex;
+            /*justify-content: center; /* 将内容水平居中 */
+            flex-direction: column; /* 将内容垂直排列 */
+            align-items: center;
+        }
+        .header {
+            margin-top: 5px; /* 调整上边距 */
+            /*float: left; /* 添加浮动属性
+            clear: both; /* 清除浮动，确保下方不会有其他浮动元素影响*/
+        }
+        .navbar-brand {
+            color: #ffffff;
+            font-weight: bold;
+            text-decoration: none;
+            font-family: 宋体, SimSun, serif;
+        }
+        nav {
+            background-color: rgba(144, 144, 144, 0.3);
+            padding: 0;
+            width: 1400px;
+            min-width: 1200px;
+            height: 70px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            /* 将内容垂直居中 */
+        }
+        nav ul {
+            align-content: center;
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            /* 将 ul 元素左外边距置为自动 */
+            margin: 0 0 0 auto;
+        }
+        nav ul li {
+            margin-left: 5px;
+        }
+        nav ul li.search-form {
+            display: flex;
+            align-items: center;
+        }
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+        nav ul li a {
+            color: rgba(57, 43, 255, 0.5);
+            text-decoration: none;
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            vertical-align: middle;
+            font-family: 宋体, SimSun, serif;
+        }
+        nav ul li a:hover {
+            color: #1c28ff;
+        }
+        nav form {
+            display: flex;
+            margin-left: 20px; /* Added margin for form alignment */
+            align-items: center;
+        }
+        nav form input[type="text"] {
+            font-size: 18px;
+            padding: 5px;
+            border: none;
+            margin-right: 1px;
+            border-radius: 3px 0 0 3px;
+            background-color: #fce4f9;
+        }
+        nav form button[type="submit"] {
+            font-size: 18px;
+            padding: 5px 10px;
+            background-color: #ff4d4d;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px 3px 3px 3px;
+            cursor: pointer;
+        }
+        nav form button[type="submit"]:hover {
+            /* 添加悬停样式 */
+            background-color: #ff1818; /* 修改背景颜色 */
+            /* 添加其他样式属性 */
+        }
+        nav input[type="text"] {
+            font-size: 18px;
+            padding: 5px;
+            border: none;
+            border-radius: 3px 0 0 3px;
+        }
+        {% block css %}
+
+        {% endblock %}
+	</style>
+</head>
+<body>
+	<div class="header">
+			<nav>
+             <a class="navbar-brand" href="{% url 'home' %}">壁纸网站</a>
+  			 <ul class="header-text">
+    				<li><a href="#">手机</a></li>
+    				<li><a href="#">电脑</a></li>
+    				<li><a href="{% url 'upload' %}">上传图片</a></li>
+    				<li><a href="#">540*960</a></li>
+    			 	<li>
+      		 		<form>
+                        <label><input type="text" placeholder="搜索"></label>
+                        <button type="submit">搜索</button>
+      		 		</form>
+    				</li>
+    				{% if username %}
+                        <li>{{ username }}</li>
+                        <li><a href="{% url 'logout' %}">退出</a></li>
+                    {% else %}
+                        <li><a href="{% url 'register' %}">注册</a></li>
+                        <li><a href="{% url 'login' %}" style="margin-right: 20px">登录</a></li>
+                    {% endif %}
+  			 </ul>
+			</nav>
+	</div>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
